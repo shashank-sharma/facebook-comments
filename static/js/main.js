@@ -73,21 +73,32 @@ $("#name-search").keyup(function(){
 // *
 // *
 
-imageEffect('#image-set-1',
-        'http://www.catprotection.com.au/wp-content/uploads/2014/11/2236629-cats-m.jpg',
-        'https://timedotcom.files.wordpress.com/2015/02/cats.jpg?quality=85')
-
-imageEffect('#image-set-2',
-        'https://pbs.twimg.com/profile_images/378800000532546226/dbe5f0727b69487016ffd67a6689e75a.jpeg',
-        'https://d1wn0q81ehzw6k.cloudfront.net/additional/thul/media/0eaa14d11e8930f5?w=400&h=400')
-
 show('#head-1', 1000);
 
-setTimeout(function(){
-    show('#head-2', 1000);
-}, 500);
-setTimeout(function(){
-    show('#head-3', 1000);
-}, 1000);
+document.getElementById('main-input').onkeypress = function(e){
+    if (!e) e = window.event;
+    var keyCode = e.keyCode || e.which;
+    if (keyCode == '13'){
+        $.ajax({
+            type: "GET",
+            url: "/ajax/getpage",
+            data:'keyword='+$(this).val(),
+            beforeSend: function(){
+                // Nothing to send
+            },
+            success: function(data){
+                console.log(data);
+                $("#name-suggestion").html('');
+                $("#image").append('<img src="'+data+'"/>');
+                //$("#name-suggestion").html('');
+                //for(var i=0; i<data.length; i++)
+                //{
+                //    $("#name-suggestion").append('<option value="'+data[i]+'">');
+                //}
+            }
+        });
+      return false;
+    }
+  }
 
 });

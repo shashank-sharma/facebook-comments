@@ -3,7 +3,15 @@ body {
     margin: 0;
 	padding: 0;
 }
-
+.centered{
+	    position: absolute;
+    top: 40%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -25%;
+    width: 50%;
+    height: 100px;
+}
 .container {
 	padding-left: 5%;
 	padding-right: 5%;
@@ -44,7 +52,6 @@ body {
 }
 
 .show {
-	position: relative;
 	opacity: 0;
 }
 
