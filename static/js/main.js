@@ -66,39 +66,73 @@ $("#name-search").keyup(function(){
     });
 });
 
+function storyOut()
+{
+    $("#story").fadeOut();
+    $("#head-2").fadeOut();
+    $("#head-3").fadeOut();
+    $("#head-4").fadeOut();
+}
 
 // *
 // *
 // * MAIN EVENT STARTED
 // *
 // *
-
+storyOut();
 show('#head-1', 1000);
 
 document.getElementById('main-input').onkeypress = function(e){
     if (!e) e = window.event;
     var keyCode = e.keyCode || e.which;
     if (keyCode == '13'){
+        $("#head-1").fadeOut();
+        $("#story").fadeIn();
+        $("#head-2").html('This is the tale of  ... ').fadeIn();
+        var user;
         $.ajax({
             type: "GET",
-            url: "/ajax/getpage",
+            url: "/ajax/getuser",
             data:'keyword='+$(this).val(),
             beforeSend: function(){
                 // Nothing to send
             },
             success: function(data){
-                console.log(data);
-                $("#name-suggestion").html('');
-                $("#image").append('<img src="'+data+'"/>');
-                //$("#name-suggestion").html('');
-                //for(var i=0; i<data.length; i++)
-                //{
-                //    $("#name-suggestion").append('<option value="'+data[i]+'">');
-                //}
+                if(data == 'no')
+                {
+                    console.log("NO");    
+                    Materialize.toast('Wrong', 4000);
+                    $("#head-1").fadeIn();
+                    $("#head-2").fadeOut();
+                    $("#story").fadeOut();
+                }
+                else
+                {
+                    user = data;
+                    console.log(data['name']);
+                    $("#head-3").html(data['name']+'  ...  ').fadeIn();
+                    $("#head-4").html('who posted one post').fadeIn();
+                }
+                //$("#image").append('<img src="'+data+'"/>'); 
+                $.ajax({
+                    type: "GET",
+                    url: "/ajax/getpost",
+                    data:'keyword='+user['id'],
+                    beforeSend: function(){
+                    // Nothing to send
+                },
+                success: function(data){
+                    console.log(data);
+                    $("#head-2").fadeOut('slow');
+                    $("#head-3").fadeOut('slow');
+                    $("#head-4").fadeOut('slow');
+                    $('#head-2').fadeIn('slow');
+                    $('#head-2').html('<img src = "' + data + '">');
+                }
+            });
             }
         });
       return false;
     }
   }
-
 });
