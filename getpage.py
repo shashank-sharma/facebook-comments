@@ -16,13 +16,47 @@ def getFacebookUser(keyword):
 
 def getFacebookPost(profile):
     graph = getFacebookGraph()
-    posts = graph.get_connections(profile, 'posts')
+    posts = graph.get_connections(profile, 'posts?limit=100')
 
-    postid = posts['data'][randint(0, len(posts['data']))]['id']
+    rno = randint(0, len(posts['data'])-1)
+    if 'message' in posts['data'][rno]:
+        message = posts['data'][rno]['message']
+    else:
+        message = ''
+    postid = posts['data'][rno]['id']
     args = {'fields': 'full_picture,picture', }
+    # What if there is no picture
+
 
     image = graph.get_object(postid, **args)
     #comments = graph.get_connections(profile['id'], 'comments')
-    return image['full_picture']
+    return message, image['full_picture'], postid
 
     # GET description
+
+
+def getFacebookComments(postId):
+    graph = getFacebookGraph()
+    comments = graph.get_connections(postId,
+                                    'comments?fields=like_count&summary=1')
+    totalComments = comments['summary']['total_count']
+    commentId = comments['data'][0]['id']
+    commentSummary = graph.get_connections(commentId, '?summary=1')
+    # Each comment is precious but there are permissions issue
+
+    return totalComments, commentSummary
+
+def getFacebookReplies(commentId):
+    graph = getFacebookGraph()
+    replies = graph.get_connections(commentId,
+                            'comments?fields=like_count,message&limit=100')
+    totalReplies = []
+    totalLikes = []
+    while 'paging' in replies:
+        for i in replies['data']:
+            totalReplies.append(i['message'])
+            totalLikes.append(i['like_count'])
+        replies = graph.get_connections(commentId,
+            'comments?summary=1&after='+replies['paging']['cursors']['after'])
+
+    return totalReplies, totalLikes

@@ -66,13 +66,68 @@ $("#name-search").keyup(function(){
     });
 });
 
+function showReplies(commentId)
+{
+    $.ajax({
+        type: "GET",
+        url: "/ajax/getreplies",
+        data:'keyword='+commentId,
+        beforeSend: function(){
+            // Nothing to send
+        },
+        success: function(data){
+            console.log(data);
+            $('#head-7').append('<ul>');
+            for(let i=0;i<data[0].length;i++)
+            {
+                if(i%2==0)
+                {
+                    user = 'chat them';
+                }
+                else{
+                    user = 'chat me';
+                }
+                $('#head-7').append('<li class = "'+ user +'">'+data[0][i]+'</li>');
+            }
+            $('#head-7').append('</ul>');
+            $("#head-7 li").each(function(i) {
+                $(this).delay(1500 * i).fadeIn(500);
+            });
+
+        }
+    });
+}
+
 function storyOut()
 {
     $("#story").fadeOut();
     $("#head-2").fadeOut();
     $("#head-3").fadeOut();
     $("#head-4").fadeOut();
+    $("#head-5").fadeOut();
+    $("#head-6").fadeOut();
+    $("#head-7").fadeOut();
+    $("#refresh").fadeOut('fast');
 }
+
+$('#refresh').click(function() {
+    storyOut();
+    $("#head-1").fadeIn();
+    $("#intro-icons").fadeIn();
+    $("#head-7").html('');
+    $("#head-6").html('');
+});
+
+$('#about').click(function() {
+    
+    $('#head-1').fadeOut();
+    $('#about-content').fadeIn();
+});
+
+$('#back').click(function() {
+    $('#about-content').fadeOut();
+    $('#head-1').fadeIn();
+})
 
 // *
 // *
@@ -80,6 +135,7 @@ function storyOut()
 // *
 // *
 storyOut();
+$('.carousel.carousel-slider').carousel({fullWidth: true});
 show('#head-1', 1000);
 
 document.getElementById('main-input').onkeypress = function(e){
@@ -87,6 +143,7 @@ document.getElementById('main-input').onkeypress = function(e){
     var keyCode = e.keyCode || e.which;
     if (keyCode == '13'){
         $("#head-1").fadeOut();
+        $("#intro-icons").fadeOut();
         $("#story").fadeIn();
         $("#head-2").html('This is the tale of  ... ').fadeIn();
         var user;
@@ -108,6 +165,7 @@ document.getElementById('main-input').onkeypress = function(e){
                 }
                 else
                 {
+                    $("#refresh").fadeIn();
                     user = data;
                     console.log(data['name']);
                     $("#head-3").html(data['name']+'  ...  ').fadeIn();
@@ -126,8 +184,24 @@ document.getElementById('main-input').onkeypress = function(e){
                     $("#head-2").fadeOut('slow');
                     $("#head-3").fadeOut('slow');
                     $("#head-4").fadeOut('slow');
-                    $('#head-2').fadeIn('slow');
-                    $('#head-2').html('<img src = "' + data + '">');
+                    $('#head-5').html('<p>'+data[0]+'</p>').fadeIn();
+                    $('#head-5').append('<img src = "' + data[1] + '" style="width: 70%"><br>').fadeIn();
+                    var postid = data[2];
+                $.ajax({
+                    type: "GET",
+                    url: "/ajax/getcomments",
+                    data:'keyword='+postid,
+                    beforeSend: function(){
+                    // Nothing to send
+                },
+                success: function(data){
+                    console.log(data);
+                    $('#head-6').append('<p class = "flow-text">And from ' + data[0] + ' comments someone named '+ data[1]['from']['name'] + ' commented ...').delay(3000).fadeIn();
+                    console.log(data[1]['message']);
+                    $('#head-7').append('<p class = "flow-text">" '+data[1]['message']+ ' "</p>').delay(3000).fadeIn();
+                    showReplies(data[1]['id']);
+                }
+            });
                 }
             });
             }

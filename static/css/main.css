@@ -69,3 +69,52 @@ input[type=text] {
     margin: 8px 0;
     box-sizing: border-box;
 }
+
+.chat {
+  margin: 0 0 0.5em;
+  border-radius: 1em;
+  padding: 0.5em 1em;
+  background: grey;
+  max-width: 75%;
+  clear: both;
+  position: relative;
+}
+.them {
+    float: left;
+}    
+.them::after {
+      content: "";
+      position: absolute;
+      left: -0.4em;
+      bottom: 0;
+      width: 0.5em;
+      height: 1em;
+      border-right: 0.7em solid grey;
+      border-bottom-right-radius: 1em 1.5em;
+    -ms-transform: rotate(50deg); /* IE 9 */
+    -webkit-transform: rotate(50deg); /* Chrome, Safari, Opera */
+    transform: rotate(50deg);
+}
+  
+.me {
+    float: right;
+    background-color: blue;
+    color: white;
+}   
+.me::after {
+      content: "";
+      position: absolute;
+      right: -0.2em;
+      bottom: 0;
+      width: 0.5em;
+      height: 1em;
+      border-left: 0.5em solid blue;
+      border-bottom-left-radius: 1em 1.5em;
+      -ms-transform: rotate(-50deg); /* IE 9 */
+      -webkit-transform: rotate(-50deg); /* Chrome, Safari, Opera */
+      transform: rotate(-50deg);
+    }
+
+li{
+	display: none;
+}

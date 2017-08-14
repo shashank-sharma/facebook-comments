@@ -23,14 +23,27 @@ def getuser(request):
 def getpost(request):
     if request.is_ajax():
         userid = request.GET['keyword']
-        post = getFacebookPost(userid)
-        data = json.dumps(post)
+        message, image, postid = getFacebookPost(userid)
+        data = json.dumps([message, image, postid])
         return HttpResponse(data, content_type = "application/json")
     else:
         raise Http404
 
 def getcomments(request):
     if request.is_ajax():
-        pass
+        postid = request.GET['keyword']
+        number, summary = getFacebookComments(postid)
+        data = json.dumps([number, summary])
+        return HttpResponse(data, content_type = "application/json")
     else:
         raise Http404
+
+def getreplies(request):
+    if request.is_ajax():
+        commentid = request.GET['keyword']
+        replies, likes = getFacebookReplies(commentid)
+        data = json.dumps([replies, likes])
+        return HttpResponse(data, content_type = "application/json")
+    else:
+        raise Http404
+

@@ -28,22 +28,67 @@
 	
   </head>
   <body bgcolor="black">
+  
+  <div class="flow-text container" id="about-content" style="color: white;display: none;">
+  <a href = "javascript:void(0);" id="back"><i class="material-icons medium" style="position: fixed;left: 0;top: 0;color: white;">arrow_back</i></a>
+  <p style="font-size: 42px;">About</p>
+  <hr style="color:teal">
+  <p>Hey there,</p>
+  <p>This web app fetches random post from given page and then fetch trending comments from it. And then it shows all the replies in order as if they are chatting. So in short it's like a story going on.</p>
+  <p style="font-size: 32px">Technologies Used</p>
+  <hr style="color:teal">
+  <p>Python 3.6</p>
+  <p>Django 1.11 - Web Framework</p>
+  <p>Materialize - CSS Framework</p>
+  <p>Facebook-sdk module (Facebook Graph API)</p>
+  </div>
+
+
   <div class="home">
     <div class="centered" id="head-1" style="opacity: 0;">
-      	<center><p class="flow-text type" style="color: white;font-size: 25px">This is the tale of ...</p></center>
+      	<center><p class="flow-text" style="color: white;font-size: 25px">This is the tale of ...</p></center>
         <input type="text" id = "main-input" style="font-size:25px;font-weight: bold;color:white;height:60px;" autofocus="autofocus" placeholder="9gag" autocomplete="off" active>
     </div>
-    <div class="footeri" style="position: absolute;bottom: 0;">
-    <img src="{% static 'img/materialize.png' %}" width="5%" height="5%">
-    <img src="{% static 'img/github-logo.png' %}" width="5%" height="5%">
+    <div class="footeri" style="position: fixed;bottom: 0;" id = "intro-icons">
+    <a id="about" href = "javascript:void(0);"><img src="{% static 'img/materialize.png' %}" width="7%" height="7%"></a>
+    <a href = "https://github.com/shashank-sharma/facebook-comments" target="_blank"><img src="{% static 'img/github-logo.png' %}" width="7%" height="7%"></a>
     </div>
   </div>
+      
+
+      <a href = "javascript:void(0);" id = "refresh"><i class="material-icons small" style="position:fixed;right:0;top:0;color: white">refresh</i></a>
     <div class="centered flow-text type" id="story" style="color: white">
     <span id="head-2"></span>
     <span id="head-3"></span>
     <span id="head-4"></span>
     </div>
-    <div style="color: white" id="image">
+    <div class="row">
+    <div class="col s6 l6 m12" style="color: white;">
+    <span id="head-5">
+    </span>
+    <span id="head-6">
+    </span>
+    </div>
+    <div class="col s6 l6 m12">
+    <span id="head-7" class="" style="color: white">
+<!--     <ul>
+<li class="chat them">
+Annie, I'm going to be a lil late for the rehearsal, tonight.
+</li>
+  
+<li class="chat me">
+S'Okay, Maude.  You know your lines...?
+</li>
+
+<li class="chat them">
+I know em, I don't know what order they         come in...
+</li>
+
+<li class="chat me">
+We'll work it out...
+</li>
+</ul> -->
+    </span> 
     </div>
   </body>
 </html>
