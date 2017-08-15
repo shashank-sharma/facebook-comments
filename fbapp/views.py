@@ -41,8 +41,8 @@ def getcomments(request):
 def getreplies(request):
     if request.is_ajax():
         commentid = request.GET['keyword']
-        replies, likes = getFacebookReplies(commentid)
-        data = json.dumps([replies, likes])
+        replies, likes, users = getFacebookReplies(commentid)
+        data = json.dumps([replies, likes, users])
         return HttpResponse(data, content_type = "application/json")
     else:
         raise Http404

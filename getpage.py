@@ -29,8 +29,12 @@ def getFacebookPost(profile):
 
 
     image = graph.get_object(postid, **args)
+    if 'full_picture' in image:
+        fullImage = image['full_picture']
+    else:
+        fullImage = ''
     #comments = graph.get_connections(profile['id'], 'comments')
-    return message, image['full_picture'], postid
+    return message, fullImage, postid
 
     # GET description
 
@@ -49,14 +53,16 @@ def getFacebookComments(postId):
 def getFacebookReplies(commentId):
     graph = getFacebookGraph()
     replies = graph.get_connections(commentId,
-                            'comments?fields=like_count,message&limit=100')
+                    'comments?fields=like_count,message,from&limit=100')
     totalReplies = []
     totalLikes = []
+    totalUsers = []
     while 'paging' in replies:
         for i in replies['data']:
             totalReplies.append(i['message'])
             totalLikes.append(i['like_count'])
+            totalUsers.append(i['from']['name'])
         replies = graph.get_connections(commentId,
-            'comments?summary=1&after='+replies['paging']['cursors']['after'])
+            'comments?fields=like_count,message,from&after='+replies['paging']['cursors']['after'])
 
-    return totalReplies, totalLikes
+    return totalReplies, totalLikes, totalUsers

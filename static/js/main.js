@@ -66,7 +66,7 @@ $("#name-search").keyup(function(){
     });
 });
 
-function showReplies(commentId)
+function showReplies(commentId, userComment)
 {
     $.ajax({
         type: "GET",
@@ -80,18 +80,18 @@ function showReplies(commentId)
             $('#head-7').append('<ul>');
             for(let i=0;i<data[0].length;i++)
             {
-                if(i%2==0)
+                if(data[2][i] == userComment)
                 {
-                    user = 'chat them';
-                }
-                else{
                     user = 'chat me';
                 }
-                $('#head-7').append('<li class = "'+ user +'">'+data[0][i]+'</li>');
+                else{
+                    user = 'chat them';
+                }
+                $('#head-7').append('<li class = "'+ user +'">'+'<b><p style="font-size:12px">'+ data[2][i] +'</p></b>'+data[0][i]+'</li>');
             }
             $('#head-7').append('</ul>');
             $("#head-7 li").each(function(i) {
-                $(this).delay(1500 * i).fadeIn(500);
+            $(this).delay(1500 * i).fadeIn(500);
             });
 
         }
@@ -158,7 +158,7 @@ document.getElementById('main-input').onkeypress = function(e){
                 if(data == 'no')
                 {
                     console.log("NO");    
-                    Materialize.toast('Wrong', 4000);
+                    Materialize.toast('Wrong Username', 4000);
                     $("#head-1").fadeIn();
                     $("#head-2").fadeOut();
                     $("#story").fadeOut();
@@ -185,7 +185,14 @@ document.getElementById('main-input').onkeypress = function(e){
                     $("#head-3").fadeOut('slow');
                     $("#head-4").fadeOut('slow');
                     $('#head-5').html('<p>'+data[0]+'</p>').fadeIn();
-                    $('#head-5').append('<img src = "' + data[1] + '" style="width: 70%"><br>').fadeIn();
+                    if(data[1] != '')
+                    {
+                        $('#head-5').append('<img src = "' + data[1] + '" style="width: auto;height:500px;"><br>').fadeIn();
+                    }
+                    else
+                    {
+                        $('#head-5').append('').fadeIn();
+                    }
                     var postid = data[2];
                 $.ajax({
                     type: "GET",
@@ -198,8 +205,15 @@ document.getElementById('main-input').onkeypress = function(e){
                     console.log(data);
                     $('#head-6').append('<p class = "flow-text">And from ' + data[0] + ' comments someone named '+ data[1]['from']['name'] + ' commented ...').delay(3000).fadeIn();
                     console.log(data[1]['message']);
-                    $('#head-7').append('<p class = "flow-text">" '+data[1]['message']+ ' "</p>').delay(3000).fadeIn();
-                    showReplies(data[1]['id']);
+                    $('#head-7').append('<p class = "flow-text">" '+data[1]['message']+ ' "</p>').delay(7000).fadeIn();
+                    
+                     $(this).delay(9000).queue(function() {
+
+                        showReplies(data[1]['id'], data[1]['from']['name']);
+
+                        $(this).dequeue();
+
+                        });
                 }
             });
                 }
