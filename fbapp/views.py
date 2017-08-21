@@ -47,3 +47,9 @@ def getreplies(request):
     else:
         raise Http404
 
+
+def suggest(request):
+    if request.is_ajax():
+        pass
+    else:
+        pass

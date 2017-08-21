@@ -6,5 +6,6 @@ urlpatterns = [
     url(r'^ajax/getpost', views.getpost, name = 'getpost'),
     url(r'^ajax/getcomments', views.getcomments, name = 'getcomments'),
     url(r'^ajax/getreplies', views.getreplies, name = 'getreplies'),
+    url(r'^ajax/suggestionname', views.suggest, name = 'suggest'),
     url(r'^$', views.home, name = 'home'),
 ]

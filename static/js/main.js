@@ -23,28 +23,6 @@ function imageEffect(id, url1, url2){
 
 }
 
-// * Function to implement AJAX call
-// * It makes call to one url which in turns runs one function
-// * of python which makes use of the data and then save it in
-// * database
-$('#submit').click(function() {
-    var name = document.forms.survey.Name.value;
-    var address = document.forms.survey.Address.value;
-    var email = document.forms.survey.Email.value;
-    $.ajax({
-        type: "GET",
-        url: "/ajax/data?name="+name+"&address="+address+"&email="+email,
-        success: function(data) {
-            if(data == 'no'){
-                $("#confirmation").html("<h1>Error: Your information has not been Submitted</h1>")
-            }
-            else{
-                $("#confirmation").html("<h1>Your information has been Submitted</h1>")
-            }
-        }
-    });
-});
-
 // *
 // * Autocomplete makes one AJAX calls
 // *
