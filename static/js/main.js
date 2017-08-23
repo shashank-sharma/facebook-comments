@@ -26,7 +26,14 @@ function imageEffect(id, url1, url2){
 // *
 // * Autocomplete makes one AJAX calls
 // *
-$("#name-search").keyup(function(){
+  $('input.autocomplete').autocomplete({
+    data: {
+      "Apple": null,
+      "Microsoft": null,
+      "Google": 'http://placehold.it/250x250'
+    }
+  });
+$(".autocomplete").keyup(function(){
     $.ajax({
         type: "GET",
         url: "/ajax/suggestionname",
@@ -35,11 +42,7 @@ $("#name-search").keyup(function(){
             // Nothing to send
         },
         success: function(data){
-            $("#name-suggestion").html('');
-            for(var i=0; i<data.length; i++)
-            {
-                $("#name-suggestion").append('<option value="'+data[i]+'">');
-            }
+            console.log('HUA');
         }
     });
 });
