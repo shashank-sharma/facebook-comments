@@ -1,10 +1,39 @@
 from django.shortcuts import render
 from getpage import *
-from fbapp.models import Search
+from fbapp.models import Search, Clap
 from django.http import Http404, HttpResponse
 import json
 
 # Create your views here.
+
+def clap(request):
+	if request.is_ajax():
+		clap = Clap.objects.all()
+		if(len(clap) == 0):
+			clap = Clap(clap = 1)
+			clap.save()
+			clapCount = 1
+		else:
+			clapValue = clap.values()[0]['clap']
+			clap[0].clap = clapValue + 1
+			clap[0].save()
+			clapCount = clap[0].clap
+		data = json.dumps(clapCount)
+		return HttpResponse({}, content_type = "application/json")
+	else:
+		raise Http404
+
+def getclap(request):
+	if request.is_ajax():
+		clap = Clap.objects.all()
+		if(len(clap) == 0):
+			clap = 0
+		else:
+			clap = clap[0].clap
+		data = json.dumps(clap)
+		return HttpResponse(data, content_type = "application/json")
+	else:
+		raise Http404
 
 def home(request):
     return render(request, 'home.html', {})
@@ -17,8 +46,10 @@ def getuser(request):
         except:
             user = 'no'
         if user != 'no':
-        	searchModel = Search(user = user)
-        	searchModel.save()
+        	searchModel = Search.objects.filter(user = keyword)
+        	if(not searchModel):
+        		searchModel = Search(user = keyword)
+        		searchModel.save()
         data = json.dumps(user)
         return HttpResponse(data, content_type = "application/json")
     else:
@@ -54,13 +85,12 @@ def getreplies(request):
 
 def suggest(request):
     if request.is_ajax():
-        keyword = request.GET['keyword']
         temp = []
         searchModel = Search.objects.all()
-        for i in searchModel:
-        	if keyword == i[:len(keyword)]:
-        		temp.append(i)
+        for i in searchModel.values():
+        	temp.append(i['user'])
         temp = list(set(temp))
+        print(temp)
         data = json.dumps(temp)
         return HttpResponse(data, content_type = "application/json")
     else:

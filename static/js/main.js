@@ -26,26 +26,32 @@ function imageEffect(id, url1, url2){
 // *
 // * Autocomplete makes one AJAX calls
 // *
-  $('input.autocomplete').autocomplete({
-    data: {
-      "Apple": null,
-      "Microsoft": null,
-      "Google": 'http://placehold.it/250x250'
-    }
-  });
-$(".autocomplete").keyup(function(){
+function autoComplete()
+{
     $.ajax({
         type: "GET",
         url: "/ajax/suggestionname",
-        data:'keyword='+$(this).val(),
+        //data:'keyword='+$(this).val(),
         beforeSend: function(){
             // Nothing to send
         },
-        success: function(data){
+        success: function(someData){
             console.log('HUA');
+            var data = {}
+            for(i=0;i<someData.length;i++)
+            {
+                data[someData[i]] = null;
+            }
+            console.log(data);
+            $('input.autocomplete').autocomplete({
+            data: data,
+        });
+            var name = someData[Math.floor((Math.random() * someData.length) + 0)];
+            console.log(name);
+        $('input').attr('placeholder', name);
         }
     });
-});
+}
 
 function showReplies(commentId, userComment)
 {
@@ -68,13 +74,34 @@ function showReplies(commentId, userComment)
                 else{
                     user = 'chat them';
                 }
-                $('#head-7').append('<li class = "'+ user +'">'+'<b><p style="font-size:12px">'+ data[2][i] +'</p></b>'+data[0][i]+'</li>');
+                $('#head-7').append('<li style = "list-style-type: none;" class = "lii '+ user +'">'+'<b><p style="font-size:12px">'+ data[2][i] +'</p></b>'+data[0][i]+'</li>');
             }
             $('#head-7').append('</ul>');
             $("#head-7 li").each(function(i) {
             $(this).delay(1500 * i).fadeIn(500);
             });
 
+        }
+    });
+}
+
+$('.fixed-action-btn').on( 'click', '.fixed-action-btn', function() {
+    $.ajax({
+        type: "GET",
+        url: "/ajax/clap",
+        success: function(data) {
+        $('#clap-count').html('<center>'+data+'</center>');
+        }
+    });
+});
+
+function clapcount()
+{
+    $.ajax({
+        type: "GET",
+        url: "/ajax/getclap",
+        success: function(data) {
+        $('#clap-count').html('<center>'+data+'</center>');
         }
     });
 }
@@ -92,6 +119,8 @@ function storyOut()
 }
 
 $('#refresh').click(function() {
+    autoComplete();
+    $('input').value('');
     storyOut();
     $("#head-1").fadeIn();
     $("#intro-icons").fadeIn();
@@ -115,11 +144,13 @@ $('#back').click(function() {
 // * MAIN EVENT STARTED
 // *
 // *
+clapcount();
+autoComplete();
 storyOut();
 $('.carousel.carousel-slider').carousel({fullWidth: true});
 show('#head-1', 1000);
 
-document.getElementById('main-input').onkeypress = function(e){
+document.getElementById('main-input autocomplete-input').onkeypress = function(e){
     if (!e) e = window.event;
     var keyCode = e.keyCode || e.which;
     if (keyCode == '13'){

@@ -4,7 +4,7 @@ body {
 	padding: 0;
 }
 .centered{
-	    position: absolute;
+	  position: absolute;
     top: 40%;
     left: 50%;
     margin-top: -50px;
@@ -63,13 +63,6 @@ body {
     height: 200px;
 }
 
-input[type=text] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-}
-
 .chat {
   margin: 0 0 0.5em;
   border-radius: 1em;
@@ -113,8 +106,7 @@ input[type=text] {
       -ms-transform: rotate(-50deg); /* IE 9 */
       -webkit-transform: rotate(-50deg); /* Chrome, Safari, Opera */
       transform: rotate(-50deg);
-    }
-
-li{
-	display: none;
+}
+.lii {
+  display:none;
 }
