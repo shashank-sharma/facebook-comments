@@ -85,7 +85,8 @@ function showReplies(commentId, userComment)
     });
 }
 
-$('.fixed-action-btn').on( 'click', '.fixed-action-btn', function() {
+$('.fixed-action-btn').on( 'click', '#clap', function() {
+    $(this).addClass("pulse");
     $.ajax({
         type: "GET",
         url: "/ajax/clap",
@@ -93,6 +94,9 @@ $('.fixed-action-btn').on( 'click', '.fixed-action-btn', function() {
         $('#clap-count').html('<center>'+data+'</center>');
         }
     });
+        setTimeout(function() {    
+        $('#clap').removeClass("pulse");
+        }, 500);
 });
 
 function clapcount()

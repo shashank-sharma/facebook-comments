@@ -19,7 +19,7 @@ def clap(request):
 			clap[0].save()
 			clapCount = clap[0].clap
 		data = json.dumps(clapCount)
-		return HttpResponse({}, content_type = "application/json")
+		return HttpResponse(data, content_type = "application/json")
 	else:
 		raise Http404
 
