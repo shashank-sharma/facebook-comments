@@ -8,18 +8,16 @@ import json
 
 def clap(request):
 	if request.is_ajax():
+		keyword = request.GET['keyword']
 		clap = Clap.objects.all()
 		if(len(clap) == 0):
-			clap = Clap(clap = 1)
+			clap = Clap(clap = int(keyword))
 			clap.save()
-			clapCount = 1
+			clapCount = int(keyword)
 		else:
-			clapValue = clap.values()[0]['clap']
-			clap[0].clap = clapValue + 1
+			clap[0].clap = int(keyword)
 			clap[0].save()
-			clapCount = clap[0].clap
-		data = json.dumps(clapCount)
-		return HttpResponse(data, content_type = "application/json")
+		return HttpResponse({}, content_type = "application/json")
 	else:
 		raise Http404
 
