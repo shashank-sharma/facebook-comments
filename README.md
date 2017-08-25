@@ -12,6 +12,7 @@ With so many AJAX calls this web app gives you relax feeling of reading some fun
 Features:
 1. For every successful user entry, it will add the text inside database and then later for other user's it will show suggestions.
 2. Comments will be shown with delay of 1.5 seconds.
+3. Clapping feature (+1 Button) so that any user can appreciate the work or give positive response.
 
 Techhnologies Used:
 1. Python 3.5
