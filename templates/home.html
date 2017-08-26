@@ -28,10 +28,15 @@
   <body bgcolor="black">
   <div class="flow-text container" id="about-content" style="color: white;display: none;">
   <a href = "javascript:void(0);" id="back"><i class="material-icons small" style="position: fixed;left: 0;top: 0;color: white;">arrow_back</i></a>
+  <p style="font-size: 22px;">Help ?</p>
+  <hr style="color:teal">
+  1. Get Facebook Page username<br>
+  2. Enter that username in text<br>
+  3. Sit back and eat popcorn<br>
   <p style="font-size: 42px;">About</p>
   <hr style="color:teal">
   <p>Hey there,</p>
-  <p>This web app fetches random post from given page and then fetch trending comments from it. And then it shows all the replies in order as if they are chatting. So in short it's like a story going on.</p>
+  <p>This web app fetches random post from given Facebook page and then fetch trending comments from it. And then it shows all the replies in order as if they are chatting. So in short it's like a story going on.</p>
   <p style="font-size: 32px">Technologies Used</p>
   <hr style="color:teal">
   <p>Python 3.6</p>
@@ -45,7 +50,7 @@
         <input type="text" id = "main-input autocomplete-input" class="autocomplete" style="font-size:25px;font-weight: bold;color:white;height:60px;" autofocus="autofocus" placeholder="" autocomplete="off" active>
     </div>
     <div class="footeri" style="position: fixed;bottom: 0;" id = "intro-icons">
-    <a id="about" href = "javascript:void(0);"><i class="material-icons" style="color: white;">info</i></a>
+    <a id="about" href = "javascript:void(0);" data-position="top" data-delay="50" data-tooltip="Help ?" class = "tooltipped"><i class="material-icons" style="color: white;">info</i></a>
     <a href = "https://github.com/shashank-sharma/facebook-comments" target="_blank"><img src="{% static 'img/github-logo.png' %}" width="9%" height="9%"></a>
     </div>
     <div class="fixed-action-btn">
@@ -54,8 +59,7 @@
 
     </div>
   </div>
-  </div>
-        
+  </div>       
     <a href = "javascript:void(0);" id = "refresh"><i class="material-icons small" style="position:fixed;right:0;top:0;color: white">refresh</i></a>
     <div class="centered flow-text type" id="story" style="color: white">
     <span id="head-2"></span>
