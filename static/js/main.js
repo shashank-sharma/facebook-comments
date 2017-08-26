@@ -85,40 +85,60 @@ function showReplies(commentId, userComment)
     });
 }
 
+function getClap(cs)
+{
+    console.log("CS = "+ cs);
+    $.ajax({
+        type: "GET",
+        url: "/ajax/getclap",
+        success: function(data) {
+        var clap = data;
+        $('#clap-count').html('<center>'+(parseInt(clap)+cs)+'</center>');
+        var clap = clap + cs;
+        $(this).addClass("pulse");
+        $.ajax({
+            type: "GET",
+            url: "/ajax/clap",
+            data:'keyword='+clap,
+            success: function(data) {
+            console.log("I came here");
+            $('#clap-count').html('<center>'+data+'</center>');
+            }
+        });
+            setTimeout(function() {    
+            $('#clap').removeClass("pulse");
+            }, 500);
+        }
+    });
+}
+
+var count = 0;
 function updateClap()
 {
     var clap = $("#clap-count").text();
+    count += 1;
+    console.log(count);
     $('#clap-count').html('<center>'+(parseInt(clap)+1)+'</center>');
 }
 
-var temp = 0
     $("#clap").mousedown(function() {
+        count = 0;
         $(this).addClass("pulse");
         int = setInterval(updateClap, 200);
     }).mouseup(function() {
         clearInterval(int);
+        console.log('-------' + count);
+        var clap = getClap(count);
         setTimeout(function() {    
         $('#clap').removeClass("pulse");
         }, 500); 
     });
 
 $('.fixed-action-btn').on( 'click', '#clap', function() {
-    var clap = $("#clap-count").text();
-    $('#clap-count').html('<center>'+(parseInt(clap)+1)+'</center>');
-    var clap = $("#clap-count").text();
-    $(this).addClass("pulse");
-    $.ajax({
-        type: "GET",
-        url: "/ajax/clap",
-        data:'keyword='+clap,
-        success: function(data) {
-        console.log("I came here");
-        $('#clap-count').html('<center>'+data+'</center>');
-        }
-    });
-        setTimeout(function() {    
-        $('#clap').removeClass("pulse");
-        }, 500);
+    if(count == 0)
+    {
+    getClap(1);
+    }
 });
 
 function clapcount()

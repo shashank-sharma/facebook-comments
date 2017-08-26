@@ -29,6 +29,7 @@ def getclap(request):
 		else:
 			clap = clap[0].clap
 		data = json.dumps(clap)
+		print(data)
 		return HttpResponse(data, content_type = "application/json")
 	else:
 		raise Http404
