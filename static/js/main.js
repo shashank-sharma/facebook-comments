@@ -36,18 +36,15 @@ function autoComplete()
             // Nothing to send
         },
         success: function(someData){
-            console.log('HUA');
             var data = {}
             for(i=0;i<someData.length;i++)
             {
                 data[someData[i]] = null;
             }
-            console.log(data);
             $('input.autocomplete').autocomplete({
             data: data,
         });
             var name = someData[Math.floor((Math.random() * someData.length) + 0)];
-            console.log(name);
         $('input').attr('placeholder', name);
         }
     });
@@ -63,7 +60,6 @@ function showReplies(commentId, userComment)
             // Nothing to send
         },
         success: function(data){
-            console.log(data);
             $('#head-7').append('<ul>');
             for(let i=0;i<data[0].length;i++)
             {
@@ -87,21 +83,19 @@ function showReplies(commentId, userComment)
 
 function getClap(cs)
 {
-        var clap = data;
-        $('#clap-count').html('<center>'+(parseInt(clap)+cs)+'</center>');
-        var clap = clap + cs;
-    console.log("CS = "+ cs);
     $.ajax({
         type: "GET",
         url: "/ajax/getclap",
         success: function(data) {
+        var clap = data;
+        $('#clap-count').html('<center>'+(parseInt(clap)+cs)+'</center>');
+        var clap = clap + cs;
         $(this).addClass("pulse");
         $.ajax({
             type: "GET",
             url: "/ajax/clap",
             data:'keyword='+clap,
             success: function(data) {
-            console.log("I came here");
             $('#clap-count').html('<center>'+data+'</center>');
             }
         });
@@ -117,7 +111,6 @@ function updateClap()
 {
     var clap = $("#clap-count").text();
     count += 1;
-    console.log(count);
     $('#clap-count').html('<center>'+(parseInt(clap)+1)+'</center>');
 }
 
@@ -127,7 +120,6 @@ function updateClap()
         int = setInterval(updateClap, 200);
     }).mouseup(function() {
         clearInterval(int);
-        console.log('-------' + count);
         var clap = getClap(count);
         setTimeout(function() {    
         $('#clap').removeClass("pulse");
@@ -165,7 +157,6 @@ function storyOut()
 }
 
 $('#refresh').click(function() {
-    console.log("YES");
     autoComplete();
     storyOut();
     $("#head-1").fadeIn();
@@ -215,8 +206,7 @@ document.getElementById('main-input autocomplete-input').onkeypress = function(e
             },
             success: function(data){
                 if(data == 'no')
-                {
-                    console.log("NO");    
+                { 
                     Materialize.toast('Wrong Username', 4000);
                     $("#head-1").fadeIn();
                     $("#head-2").fadeOut();
@@ -226,7 +216,6 @@ document.getElementById('main-input autocomplete-input').onkeypress = function(e
                 {
                     $("#refresh").fadeIn();
                     user = data;
-                    console.log(data['name']);
                     $("#head-3").html(data['name']+'  ...  ').fadeIn();
                     $("#head-4").html('who posted one post').fadeIn();
                 }
@@ -239,7 +228,6 @@ document.getElementById('main-input autocomplete-input').onkeypress = function(e
                     // Nothing to send
                 },
                 success: function(data){
-                    console.log(data);
                     $("#head-2").fadeOut('slow');
                     $("#head-3").fadeOut('slow');
                     $("#head-4").fadeOut('slow');
@@ -261,9 +249,7 @@ document.getElementById('main-input autocomplete-input').onkeypress = function(e
                     // Nothing to send
                 },
                 success: function(data){
-                    console.log(data);
                     $('#head-6').append('<p class = "flow-text">And from ' + data[0] + ' comments someone named '+ data[1]['from']['name'] + ' commented ...').delay(3000).fadeIn();
-                    console.log(data[1]['message']);
                     $('#head-7').append('<p class = "flow-text">" '+data[1]['message']+ ' "</p>').delay(7000).fadeIn();
                     
                      $(this).delay(9000).queue(function() {
