@@ -87,14 +87,14 @@ function showReplies(commentId, userComment)
 
 function getClap(cs)
 {
+        var clap = data;
+        $('#clap-count').html('<center>'+(parseInt(clap)+cs)+'</center>');
+        var clap = clap + cs;
     console.log("CS = "+ cs);
     $.ajax({
         type: "GET",
         url: "/ajax/getclap",
         success: function(data) {
-        var clap = data;
-        $('#clap-count').html('<center>'+(parseInt(clap)+cs)+'</center>');
-        var clap = clap + cs;
         $(this).addClass("pulse");
         $.ajax({
             type: "GET",
