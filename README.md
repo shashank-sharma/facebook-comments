@@ -4,7 +4,7 @@
 
 This is the tale of your favourate post where comment starts entertaining you.
 
-Live version: http://facebook-story.herokuapp.com/
+Live version: [Link](http://facebook-story.herokuapp.com/)
 
 Django web app insipired by facebook real comments. It fetch comments from facebook by the help of Facebook Graph API and in Python it is used by facebook-sdk module.
 With so many AJAX calls this web app gives you relax feeling of reading some funny comments randomly just by typing the page name.
