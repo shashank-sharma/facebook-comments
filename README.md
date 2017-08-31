@@ -20,4 +20,4 @@ Techhnologies Used:
 3. Materialize CSS Framework
 4. Facebook Graph API (facebook-sdk)
 
-If you love this page then please press +1 button in the given website. It's like clapping for someone so you can press that button many times.
+If you love this page then please press +1 button in the given website. It's like clapping for someone so you can press that button many times (Inspired by Medium).
